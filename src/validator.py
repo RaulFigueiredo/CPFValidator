@@ -17,7 +17,7 @@ class CPF:
         _cpf_clean (str): A cleaned version of the CPF string with non-digit characters removed.
 
     Methods:
-        _clean_cpf(cpf): Static method to remove non-digit characters from a CPF string.
+        clearing_cpf(cpf): Static method to remove non-digit characters from a CPF string.
     """
 
     def __init__(self, cpf: str):
@@ -27,10 +27,10 @@ class CPF:
         Args:
             cpf (str): A string representing a CPF number.
         """
-        self._cpf_clean = self.clean_cpf(cpf)
+        self._cpf_clean = self.clearing_cpf(cpf)
 
     @staticmethod
-    def clean_cpf(cpf: str) -> str:
+    def clearing_cpf(cpf: str) -> str:
         """
         Remove non-digit characters from a CPF string.
 
@@ -59,7 +59,7 @@ class CPFValidator:
 
     Methods:
         validate(cpf): Static method to validate a CPF number.
-        _calculate_digit(cpf, num_digits): Helper static method to calculate a digit of 
+        _calculate_digit(cpf, num_digits): Helper static method to calculate a digit of
                                            the CPF number.
     """
 
@@ -80,7 +80,7 @@ class CPFValidator:
                 CPFValidator.calculate_digit(cpf, 10) == int(cpf[10]))
 
     @staticmethod
-    def calculate_digit(cpf, num_digits):
+    def calculate_digit(cpf: str, num_digits: int) -> int:
         """
         Calculate a digit of the CPF number.
 
@@ -91,6 +91,10 @@ class CPFValidator:
         Returns:
             int: The calculated digit.
         """
-        sum_digits = sum(int(digit)*(num_digits+1-i) for i, digit in enumerate(cpf[:num_digits]))
+        sum_digits = 0
+        for i, digit in enumerate(cpf[:num_digits]):
+            sum_digits += int(digit) * (num_digits + 1 - i)
+
         calculated_digit = (sum_digits * 10) % 11
+
         return 0 if calculated_digit == 10 else calculated_digit
